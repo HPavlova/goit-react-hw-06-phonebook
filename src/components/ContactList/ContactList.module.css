@@ -1,0 +1,10 @@
+.ContactList {
+  font-size: 20px;
+}
+
+.ContactList__button {
+  width: 100px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}

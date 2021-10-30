@@ -1,0 +1,29 @@
+.ContactForm {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  padding: 20px;
+  border-radius: 2px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+}
+
+.ContactForm__label {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.ContactForm__input {
+  display: block;
+  width: 300px;
+  padding-left: 5px;
+  margin-top: 10px;
+  outline: 0;
+}
+
+.ContactForm__button {
+  width: 150px;
+  cursor: pointer;
+}
+
+.ContactForm__button:hover {
+  background-color: skyblue;
+}
