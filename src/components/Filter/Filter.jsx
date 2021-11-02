@@ -1,8 +1,14 @@
-import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import propTypes from 'prop-types';
 import styles from './Filter.module.css';
 
-const Filter = ({ value, onChangeFilter }) => {
+import { getFilter } from '../../redux/contacts/contacts-selectors';
+import { changeFilter } from '../../redux/contacts/contacts-actions';
+
+const Filter = () => {
+  const value = useSelector(getFilter);
+  const dispatch = useDispatch();
+
   return (
     <div>
       <label className={styles.Filter__label}>
@@ -15,9 +21,7 @@ const Filter = ({ value, onChangeFilter }) => {
           title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
           required
           value={value}
-          onChange={event => {
-            onChangeFilter(event.target.value);
-          }}
+          onChange={e => dispatch(changeFilter(e.target.value))}
         />
       </label>
     </div>
@@ -25,8 +29,8 @@ const Filter = ({ value, onChangeFilter }) => {
 };
 
 Filter.propTypes = {
-  value: propTypes.string.isRequired,
-  onChangeFilter: propTypes.func.isRequired,
+  value: propTypes.string,
+  onChangeFilter: propTypes.func,
 };
 
 export default Filter;

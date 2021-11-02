@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import styles from './ContactForm.module.css';
+import { useDispatch } from 'react-redux';
 import propTypes from 'prop-types';
+import styles from './ContactForm.module.css';
 
-export default function ContactForm({ onAddContact }) {
+import { addContact } from '../../redux/contacts/contacts-actions';
+
+function ContactForm() {
+  const [contacts, setContacts] = useState([]);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleChange = event => {
     const { name, value } = event.currentTarget;
@@ -25,7 +31,17 @@ export default function ContactForm({ onAddContact }) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    onAddContact(name, number);
+
+    const searchSameName = contacts.find(
+      contact => contact.name.toLowerCase() === contacts.name.toLowerCase(),
+    );
+
+    if (searchSameName) {
+      alert(`${contacts.name} is already in contacts`);
+    } else {
+      setContacts(prevState => [...prevState, contacts]);
+    }
+    dispatch(addContact(name, number));
     setName('');
     setNumber('');
   };
@@ -71,3 +87,5 @@ ContactForm.propTypes = {
   name: propTypes.string,
   number: propTypes.string,
 };
+
+export default ContactForm;
