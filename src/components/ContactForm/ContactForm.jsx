@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import propTypes from 'prop-types';
 import styles from './ContactForm.module.css';
 
 import { addContact } from '../../redux/contacts/contacts-actions';
+import { getVisibleContacts } from '../../redux/contacts/contacts-selectors';
 
 function ContactForm() {
-  const [contacts, setContacts] = useState([]);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(getVisibleContacts);
 
   const dispatch = useDispatch();
 
@@ -31,17 +32,14 @@ function ContactForm() {
 
   const handleSubmit = event => {
     event.preventDefault();
-
-    const searchSameName = contacts.find(
-      contact => contact.name.toLowerCase() === contacts.name.toLowerCase(),
-    );
+    const searchSameName = contacts.map(contact => contact.name).includes(name);
 
     if (searchSameName) {
-      alert(`${contacts.name} is already in contacts`);
+      alert(`${name} is already in contacts`);
     } else {
-      setContacts(prevState => [...prevState, contacts]);
+      dispatch(addContact(name, number));
     }
-    dispatch(addContact(name, number));
+
     setName('');
     setNumber('');
   };
